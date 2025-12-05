@@ -39,7 +39,7 @@ export function useTheme(): UseThemeReturn {
         const root = document.documentElement;
 
         // Remove old theme classes
-        themes.forEach(t => {
+        themes.forEach(_ => {
             root.removeAttribute(`data-theme`);
         });
 
