@@ -1,5 +1,16 @@
-Built a dynamic resume website using React, TypeScript, Vite, Tailwind CSS, and Framer Motion, developed completely inside the Google Antigravity IDE.
+# Dynamic Resume Web Application
 
-Added structured resume data, animated UI components, and a PDF download option, making it easy to share a clean, consistent, recruiter-ready profile.
+A fully dynamic resume website built using **React, TypeScript, Vite, and Tailwind CSS**, developed entirely inside the **Google Antigravity IDE**.
 
-This project is part of my AI engineering journey, exploring productivity, rapid prototyping, and the potential of AI-powered coding environments.
+### 🔗 Live Demo  
+https://resume-antigravity.vercel.app
+
+### ✨ Features
+- Structured TypeScript resume data (`src/data/resumeData.ts`)
+- Smooth Framer Motion animations
+- Light/Dark theme switching
+- PDF export for recruiter-friendly downloads
+- Deployed on Vercel
+
+### 🛠 Tech Stack
+React • TypeScript • Tailwind CSS • Vite • Framer Motion • GitHub • Vercel
