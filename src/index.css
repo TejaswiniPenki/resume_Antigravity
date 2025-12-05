@@ -1,0 +1,655 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Theme System CSS Variables
+ * Each theme defines its own color palette.
+ */
+
+@layer base {
+  :root {
+    --background: 255, 255, 255;
+    --foreground: 15, 23, 42;
+    --card: 248, 250, 252;
+    --card-foreground: 15, 23, 42;
+    --muted: 241, 245, 249;
+    --muted-foreground: 100, 116, 139;
+    --border: 226, 232, 240;
+    /* Print accent colors (solid, no gradient) */
+    --print-accent: #14b8a6;
+  }
+
+  /* Aurora Theme - Teal + Purple gradients */
+  [data-theme="aurora"] {
+    --accent: 20, 184, 166;
+    --accent-secondary: 168, 85, 247;
+    --accent-foreground: 255, 255, 255;
+    --gradient-start: 20, 184, 166;
+    --gradient-end: 168, 85, 247;
+    --print-accent: #10b981;
+  }
+
+  /* Sunrise Theme - Warm orange/pink */
+  [data-theme="sunrise"] {
+    --accent: 249, 115, 22;
+    --accent-secondary: 236, 72, 153;
+    --accent-foreground: 255, 255, 255;
+    --gradient-start: 249, 115, 22;
+    --gradient-end: 236, 72, 153;
+    --print-accent: #f97316;
+  }
+
+  /* Ocean Theme - Cool blue + cyan */
+  [data-theme="ocean"] {
+    --accent: 59, 130, 246;
+    --accent-secondary: 6, 182, 212;
+    --accent-foreground: 255, 255, 255;
+    --gradient-start: 59, 130, 246;
+    --gradient-end: 6, 182, 212;
+    --print-accent: #3b82f6;
+  }
+
+  /* Default to aurora if no theme set */
+  :root:not([data-theme]) {
+    --accent: 20, 184, 166;
+    --accent-secondary: 168, 85, 247;
+    --accent-foreground: 255, 255, 255;
+    --gradient-start: 20, 184, 166;
+    --gradient-end: 168, 85, 247;
+    --print-accent: #10b981;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-slate-900 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+
+  /* Theme-aware accent color utilities */
+  .text-accent {
+    color: rgb(var(--accent));
+  }
+
+  .text-accent-secondary {
+    color: rgb(var(--accent-secondary));
+  }
+
+  .bg-accent {
+    background-color: rgb(var(--accent));
+  }
+
+  .bg-accent-secondary {
+    background-color: rgb(var(--accent-secondary));
+  }
+
+  .border-accent {
+    border-color: rgb(var(--accent));
+  }
+
+  /* Gradient utilities using theme variables */
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)));
+  }
+
+  .bg-gradient-accent-subtle {
+    background: linear-gradient(135deg, rgba(var(--gradient-start), 0.1), rgba(var(--gradient-end), 0.1));
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow effects */
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(var(--accent), 0.3);
+  }
+
+  .glow-accent-hover:hover {
+    box-shadow: 0 0 25px rgba(var(--accent), 0.4);
+  }
+
+  /* Card styles */
+  .card-glass {
+    @apply bg-white/80 backdrop-blur-sm border border-slate-200/50;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /**
+   * CHIP MOTION ANIMATION
+   * 
+   * Subtle floating motion for skill/strength chips.
+   * Creates a calm, premium, senior-portfolio feel.
+   * 
+   * Movement: 2-3px in various directions
+   * Duration: 7 seconds (slow and smooth)
+   * Direction: looping through waypoints
+   */
+  @keyframes chip-drift {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    25% {
+      transform: translate3d(2px, -2px, 0);
+    }
+
+    50% {
+      transform: translate3d(0, 2px, 0);
+    }
+
+    75% {
+      transform: translate3d(-2px, -1px, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Apply this class to skill and strength chips for subtle motion */
+  .chip-motion {
+    animation: chip-drift 7s ease-in-out infinite alternate;
+  }
+
+  /* Variant with offset timing for visual variety */
+  .chip-motion-delayed {
+    animation: chip-drift 8s ease-in-out infinite alternate;
+    animation-delay: -3s;
+  }
+
+  /**
+   * CHIP HOVER EFFECTS
+   * 
+   * Interactive hover states for skill and strength chips.
+   * Scale up, add shadow, and subtle glow on hover.
+   */
+  .chip-interactive {
+    @apply transition-all duration-200 ease-out cursor-default;
+  }
+
+  .chip-interactive:hover {
+    @apply scale-105;
+    box-shadow: 0 4px 20px rgba(var(--accent), 0.3);
+  }
+
+  /* Gradient border effect */
+  .border-gradient {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+  }
+
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)));
+    z-index: -1;
+  }
+}
+
+/* Section scroll margin for sticky nav */
+section {
+  scroll-margin-top: 5rem;
+}
+
+/* ============================================================
+   PRINT / PDF EXPORT STYLES
+   
+   These styles create a clean, recruiter-friendly PDF output.
+   They remove gradients, simplify backgrounds, and ensure
+   proper alignment on A4 pages.
+   ============================================================ */
+
+/* Standard print media query */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/**
+ * PRINTING CLASS
+ * 
+ * Applied to body during html2canvas PDF capture.
+ * Creates a clean, professional output without:
+ * - Navigation elements
+ * - Heavy gradients
+ * - Animations
+ * - Decorative shadows
+ */
+.printing {
+  background: #ffffff !important;
+}
+
+.printing .no-print {
+  display: none !important;
+}
+
+/* Disable all animations during PDF capture */
+.printing *,
+.printing *::before,
+.printing *::after {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Specifically disable chip motion in print */
+.printing .chip-motion,
+.printing .chip-motion-delayed {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Remove hero illustration in print (the abstract shapes) */
+.printing .hero-illustration,
+.printing [class*="animate-spin"],
+.printing [class*="animate-bounce"],
+.printing [class*="animate-pulse"] {
+  display: none !important;
+}
+
+/* Simplify gradient backgrounds to solid colors for print */
+.printing .bg-gradient-accent {
+  background: var(--print-accent) !important;
+}
+
+.printing .bg-gradient-accent-subtle {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Convert gradient text to solid accent color */
+.printing .text-gradient-accent {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--print-accent) !important;
+  background-clip: unset !important;
+  color: var(--print-accent) !important;
+}
+
+/* Simplify shadows for cleaner print output */
+.printing .shadow-sm,
+.printing .shadow,
+.printing .shadow-md,
+.printing .shadow-lg,
+.printing .shadow-xl,
+.printing .shadow-2xl {
+  box-shadow: none !important;
+}
+
+/* Remove glow effects in print */
+.printing .glow-accent,
+.printing [class*="glow-"] {
+  box-shadow: none !important;
+}
+
+/* Clean card styling for print */
+.printing .rounded-2xl,
+.printing .rounded-xl {
+  border-radius: 8px !important;
+}
+
+.printing [class*="border-slate"],
+.printing [class*="border-accent"] {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure proper text colors in print */
+.printing h1,
+.printing h2,
+.printing h3,
+.printing h4 {
+  color: #111827 !important;
+}
+
+.printing .text-accent {
+  color: var(--print-accent) !important;
+}
+
+/* Print container styling */
+.printing #print-root,
+.printing #resume-root {
+  color: #111827;
+  font-size: 10.25pt;
+  line-height: 1.4;
+  max-width: 180mm !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 8mm 10mm !important;
+}
+
+/* Page break control & Section Alignment */
+.printing .print-section {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  page-break-inside: avoid !important;
+  page-break-after: auto !important;
+  margin-top: 18px !important;
+  margin-bottom: 12px !important;
+  padding: 0 !important;
+}
+
+.printing .print-section:empty {
+  display: none !important;
+}
+
+.printing .print-section-break-before {
+  break-before: page;
+}
+
+/* Print section title helper */
+.printing .print-section-title {
+  border-bottom: 1px solid var(--print-accent);
+  padding-bottom: 2px;
+  margin-bottom: 6px;
+  display: block;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Force visibility and alignment for section headers */
+.printing h2,
+.printing h3,
+.printing .print-section-title,
+.printing .print-heading {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  color: #111827 !important;
+  margin-top: 12px !important;
+  margin-bottom: 6px !important;
+  font-weight: 600 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Specific spacing for print headings */
+.printing .print-section>h2,
+.printing .print-section>h3 {
+  margin-bottom: 6mm !important;
+}
+
+/* Remove rounded box from header icons */
+.printing h2 span,
+.printing h3 span,
+.printing .print-section-title span {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-right: 4px !important;
+}
+
+/* Consistent Bullet Indentation - Reduced by ~3px */
+.printing ul,
+.printing li {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  list-style-position: inside !important;
+}
+
+.printing li {
+  padding-left: 0.8em !important;
+  text-indent: -0.8em !important;
+  margin-left: 1em !important;
+}
+
+/* Fixed Print Grid for Chips */
+.printing .print-chips {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+}
+
+/* Align Education Rows in Print */
+.printing #education .flex-col.md\:flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+/* Metrics Section Spacing */
+.printing .metrics-section {
+  margin-top: 4mm !important;
+  margin-bottom: 4mm !important;
+}
+
+/* Metric cards in print - simple boxes */
+.printing .metric-card,
+.printing [class*="bg-gradient-accent-subtle"] {
+  background: #f8fafc !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  padding: 0.5rem !important;
+}
+
+/* Project Grid Page Break Control */
+.printing .project-grid,
+.printing .project-card {
+  page-break-inside: avoid !important;
+}
+
+/* Remove ALL rounded block artifacts and card backgrounds */
+.printing .card,
+.printing .resume-card,
+.printing .project-card,
+.printing .skills-card,
+.printing .section-container,
+.printing .section-box,
+.printing .empty-wrapper,
+.printing [class*="bg-white"] {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Restore border for specific elements if needed, or keep clean */
+.printing .border-slate-200 {
+  border: none !important;
+}
+
+/* Experience timeline in print */
+.printing .experience-timeline {
+  border-left-color: var(--print-accent) !important;
+}
+
+/* Skill/strength chips in print - solid accent background */
+.printing .chip-motion,
+.printing .chip-motion-delayed,
+.printing .chip-interactive {
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* Compress chip spacing in print */
+.printing .chip,
+.printing .chip-motion,
+.printing .chip-motion-delayed,
+.printing .chip-interactive {
+  margin: 0 !important;
+  /* Reset margin for grid */
+  padding: 2mm 5mm !important;
+  border-radius: 5px !important;
+  width: 100% !important;
+  /* Full width in grid cell */
+  text-align: center !important;
+}
+
+/* Footer hidden in print */
+.printing footer {
+  display: none !important;
+}
+
+/* Hide spacers in print */
+.printing .spacer {
+  display: none !important;
+}
+
+/* Force visibility and alignment for Extra-Curricular Section */
+.printing #extra,
+.printing .extra-curricular-section {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  page-break-inside: avoid !important;
+  margin-top: 18px !important;
+  margin-bottom: 12px !important;
+}
+
+/* Ensure grid layout works in print for Extra-Curricular */
+
+
+/* Ensure Strengths chips grid works - Single Column in Print */
+.printing #extra .print-chips {
+  display: block !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  column-count: 1 !important;
+  page-break-inside: avoid !important;
+  margin-bottom: 8px !important;
+}
+
+.printing #extra .print-chips span {
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 4px !important;
+  text-align: left !important;
+}
+
+/* Print Safe Container */
+.print-safe {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* Disable animations and force layout in print */
+.printing .chip-drift,
+.printing .chip-interactive {
+  animation: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.printing .print-safe {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure Extra-Curricular follows immediately */
+.printing #extra .grid {
+  display: block !important;
+}
+
+.printing #extra .grid>div {
+  margin-bottom: 8px !important;
+}
+
+/* Disable reveal animations in print */
+.printing .print-disable-motion {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Light chips in print */
+.printing .chip-interactive,
+.printing .chip-motion,
+.printing .chip-motion-delayed {
+  background: #e2e8f0 !important;
+  /* light gray */
+  color: #111827 !important;
+  /* dark text */
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+/* section padding */
+.printing .print-section {
+  margin-top: 10mm !important;
+  margin-bottom: 8mm !important;
+}
+
+.printing #extra .grid {
+  grid-template-columns: 1fr !important;
+}
+
+.printing #extra .grid {
+  grid-template-columns: 1fr !important;
+}
+
+/* --- Final PDF polish: keep headings & chips clean --- */
+
+/* 1) Don't split section headings across pages */
+.printing h2,
+.printing h3 {
+  page-break-after: avoid !important;
+}
+
+/* 2) Make chips (skills, strengths) normal sized in PDF */
+.printing .print-chips span {
+  width: auto !important;
+  display: inline-block !important;
+  min-width: 30mm !important;
+  text-align: left !important;
+}
