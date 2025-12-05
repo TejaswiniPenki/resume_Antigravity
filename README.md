@@ -1,4 +1,5 @@
-A dynamic resume website built using React, TypeScript, Vite, and Tailwind CSS, developed entirely inside Google Antigravity IDE.
+Built a dynamic resume website using React, TypeScript, Vite, Tailwind CSS, and Framer Motion, developed completely inside the Google Antigravity IDE.
 
-The app uses a structured TypeScript data file for managing resume content, smooth UI animations with Framer Motion, and a built-in PDF export feature for clean, recruiter-friendly downloads.
-This project was created to explore AI-assisted development workflows using Antigravity.
+Added structured resume data, animated UI components, and a PDF download option, making it easy to share a clean, consistent, recruiter-ready profile.
+
+This project is part of my AI engineering journey, exploring productivity, rapid prototyping, and the potential of AI-powered coding environments.
